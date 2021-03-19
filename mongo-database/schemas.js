@@ -12,10 +12,6 @@ const productSchema = new mongoose.Schema({
   category: {type: String},
   default_price: {type: Number},
   features: [{
-    // id: {type: Number},
-    // feature_id: {type: Number},
-    // feature: {type: String},
-    // value: {type: String}
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Feature'
   }]
@@ -30,12 +26,12 @@ const featureSchema = new mongoose.Schema({
   value: {type: String}
 }, {versionKey: false});
 
-const productStyleListSchema = new mongoose.Schema({
-  results: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Style'
-  }]
-}, {versionKey: false});
+// const productStyleListSchema = new mongoose.Schema({
+//   results: [{
+//     type: mongoose.Schema.Types.ObjectId,
+//     ref: 'Style'
+//   }]
+// }, {versionKey: false});
 
 const styleSchema = new mongoose.Schema({
   id: {type: Number, unique: true},
@@ -44,14 +40,14 @@ const styleSchema = new mongoose.Schema({
   sales_price: {type: String, default: null},
   original_price: {type: String},
   default: {type: Boolean},
-  // photos: [{
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Photo'
-  // }],
-  // sku: [{
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Sku'
-  // }]
+  photos: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Photo'
+  }],
+  sku: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Sku'
+  }]
 }, {versionKey: false});
 
 const photoSchema = new mongoose.Schema({
@@ -74,7 +70,7 @@ const relatedProductSchema = new mongoose.Schema({
 
 const Product = mongoose.model('Product', productSchema);
 const Feature = mongoose.model('Feature', featureSchema);
-const ProductStyleList = mongoose.model('ProductStyleList', productStyleListSchema);
+// const ProductStyleList = mongoose.model('ProductStyleList', productStyleListSchema);
 const Style = mongoose.model('Style', styleSchema);
 const Photo = mongoose.model('Photo', photoSchema);
 const Sku = mongoose.model('Sku', skuSchema);
@@ -84,7 +80,7 @@ module.exports =  {
   RelatedProduct,
   Product,
   Feature,
-  ProductStyleList,
+  // ProductStyleList,
   Style,
   Photo,
   Sku
