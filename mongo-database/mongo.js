@@ -1,86 +1,106 @@
-// /MongoDB setup
+// const mongoose = require('./index.js');
 const mongoose = require('mongoose');
-const mongodb = mongoose.connection;
-
-const url = 'mongodb://127.0.0.1:27017/FECproducts';
-mongoose.connect(url, {useNewUrlParser: true}, (err) => {
-  if (err) throw err;
-  else {
-    console.log('MongoDB connection successful');
-  }
-});
 
 const productSchema = new mongoose.Schema({
-  name: {type: String, required: true},
-  slogan: {type: String, required: true},
-  description: {type: String, required: true},
-  category: {type: String, required: true},
-  default_price: {type: Number, required: true}, //number type
-  features: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Feature'
-  }]
-});
+  product_id: {
+    type: Number,
+    unique: true
+  },
+  name: {type: String},
+  slogan: {type: String},
+  description: {type: String},
+  category: {type: String},
+  // default_price: {type: Number},
+  // features: [{
+  //   id: {type: Number},
+  //   feature_id: {type: Number},
+  //   feature: {type: String},
+  //   value: {type: String}
+  //   // type: mongoose.Schema.Types.ObjectId,
+  //   // ref: 'Feature'
+  // }]
+}, {versionKey: false});
 
+// ensure uniqueness for each value per schema
+
+//link feature id to product id above
 const featureSchema = new mongoose.Schema({
+  feature_id: {type: Number},
   feature: {type: String},
   value: {type: String}
-});
+}, {versionKey: false});
 
 const productStyleListSchema = new mongoose.Schema({
   results: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Style'
   }]
-});
+}, {versionKey: false});
 
 const styleSchema = new mongoose.Schema({
-  name: {type: String, required: true},
-  original_price: {type: Number, required: true},
-  sales_price: {type: Number, required: true},
-  default: {type: Boolean, required: true},
-  photos: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Photo'
-  }],
-  sku: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Sku'
-  }]
-});
+  id: {type: Number, unique: true},
+  product_id: {type: Number},
+  name: {type: String},
+  sales_price: {type: String, default: null},
+  original_price: {type: String},
+  default: {type: Boolean},
+  // photos: [{
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Photo'
+  // }],
+  // sku: [{
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Sku'
+  // }]
+}, {versionKey: false});
 
 const photoSchema = new mongoose.Schema({
+  style_id: {type: Number},
   thumbnail_url: {type: String},
   url: {type: String}
-});
+}, {versionKey: false});
 
 const skuSchema = new mongoose.Schema({
-  quantity: {type: Number, required: true },
-  size: {type: String}
-});
+  style_id: {type: Number, required: true},
+  size: {type: String},
+  quantity: {type: Number}
+}, {versionKey: false});
 
+//link product_id to product id in the products
 const relatedProductSchema = new mongoose.Schema({
-  related_product_ids: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Product'
-  }]
-});
+  product_id: {type: Number},
+  related_product_id: {type: Number}
+}, {versionKey: false});
 
-//mongo will take the lowercase-plural version of 'Product'
-const productModel = mongoose.model('Product', productSchema);
-const featuresModel = mongoose.model('Feature', featureSchema);
-const productStyleListModel = mongoose.model('ProductStyleList', productStyleListSchema);
-const styleModel = mongoose.model('Style', styleSchema);
-const photoModel = mongoose.model('Photo', photoSchema);
-const skuModel = mongoose.model('Sku', skuSchema);
-const relatedProductsModel = mongoose.model('RelatedProduct', relatedProductSchema);
+// const Product = mongoose.model('Product', productSchema);
+// const Feature = mongoose.model('Feature', featureSchema);
+// const ProductStyleList = mongoose.model('ProductStyleList', productStyleListSchema);
+// const Style = mongoose.model('Style', styleSchema);
+const Photo = mongoose.model('Photo', photoSchema);
+// const Sku = mongoose.model('Sku', skuSchema);
+// const RelatedProduct = mongoose.model('RelatedProduct',relatedProductSchema);
 
-module.exports = {
-  productModel,
-  featuresModel,
-  productStyleListModel,
-  styleModel,
-  photoModel,
-  skuModel,
-  relatedProductsModel
-};
+module.exports =  {
+  // RelatedProduct,
+  // Product,
+  // Feature,
+  // ProductStyleList,
+  // Style,
+  Photo
+  // Sku
+}
+
+
+// relatedProductSchema.pre('save', async function (next) {
+//   var relatedproduct = this;
+//   if (this.isNew) {
+//       try {
+//           relatedproduct._id = new mongoose.Types.ObjectId();
+//           return next();
+//       } catch (error) {
+//           return next(error);
+//       }
+//   } else {
+//       return next();
+//   }
+// })

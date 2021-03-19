@@ -1,15 +1,14 @@
 const express = require('express');
 const router = express.Router();
-
 const IndexController = require('./controllers.js');
 
-router.get('/repos', (req, res) => {
+router.get('/relatedproducts', (req, res) => {
   console.log('route hit')
-  IndexController.getAllRepos((err, allRepos) => {
+  IndexController.getAllProducts((err, allProducts) => {
     if (err) {
-      res.status(500).send('Could not retrieve repos');
+      res.status(500).send('Could not retrieve products');
     } else {
-      res.send(allRepos);
+      res.send(allProducts);
     }
   })
 })

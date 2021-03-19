@@ -1,8 +1,11 @@
 const express = require('express');
-const app = express();
-const port = 3000;
+const port = 3001;
 const path = require('path');
 const mongoRouter = require('./mongo-database/router.js');
+//you don't need to explicitly state module.export, but you MUST require the file where you are making the mongo connection fromn
+const mongoConnection = require('./mongo-database/index.js');
+
+const app = express();
 
 app.use(express.static(path.join(__dirname,'frontend-capstone/dist')));
 app.use('/', mongoRouter);
