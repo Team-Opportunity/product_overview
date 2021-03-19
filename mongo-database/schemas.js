@@ -11,14 +11,14 @@ const productSchema = new mongoose.Schema({
   description: {type: String},
   category: {type: String},
   default_price: {type: Number},
-  // features: [{
-  //   id: {type: Number},
-  //   feature_id: {type: Number},
-  //   feature: {type: String},
-  //   value: {type: String}
-  //   // type: mongoose.Schema.Types.ObjectId,
-  //   // ref: 'Feature'
-  // }]
+  features: [{
+    // id: {type: Number},
+    // feature_id: {type: Number},
+    // feature: {type: String},
+    // value: {type: String}
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Feature'
+  }]
 }, {versionKey: false});
 
 // ensure uniqueness for each value per schema
