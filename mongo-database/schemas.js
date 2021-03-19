@@ -10,7 +10,7 @@ const productSchema = new mongoose.Schema({
   slogan: {type: String},
   description: {type: String},
   category: {type: String},
-  // default_price: {type: Number},
+  default_price: {type: Number},
   // features: [{
   //   id: {type: Number},
   //   feature_id: {type: Number},
@@ -72,22 +72,22 @@ const relatedProductSchema = new mongoose.Schema({
   related_product_id: {type: Number}
 }, {versionKey: false});
 
-// const Product = mongoose.model('Product', productSchema);
-// const Feature = mongoose.model('Feature', featureSchema);
-// const ProductStyleList = mongoose.model('ProductStyleList', productStyleListSchema);
-// const Style = mongoose.model('Style', styleSchema);
+const Product = mongoose.model('Product', productSchema);
+const Feature = mongoose.model('Feature', featureSchema);
+const ProductStyleList = mongoose.model('ProductStyleList', productStyleListSchema);
+const Style = mongoose.model('Style', styleSchema);
 const Photo = mongoose.model('Photo', photoSchema);
-// const Sku = mongoose.model('Sku', skuSchema);
-// const RelatedProduct = mongoose.model('RelatedProduct',relatedProductSchema);
+const Sku = mongoose.model('Sku', skuSchema);
+const RelatedProduct = mongoose.model('RelatedProduct',relatedProductSchema);
 
 module.exports =  {
-  // RelatedProduct,
-  // Product,
-  // Feature,
-  // ProductStyleList,
-  // Style,
-  Photo
-  // Sku
+  RelatedProduct,
+  Product,
+  Feature,
+  ProductStyleList,
+  Style,
+  Photo,
+  Sku
 }
 
 
