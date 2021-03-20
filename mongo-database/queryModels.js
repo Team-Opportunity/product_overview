@@ -2,12 +2,22 @@ const mongo = require('./index.js');
 const models = require('./schemas.js');
 
 //need to pass down a particular product_id here
-const getProductData = callback => {
-  models.Product.find({product_id: 4},(err, productData) => {
+const getProductData = (currentId, callback) => {
+  models.Product.find({product_id: currentId},(err, productData) => {
     if (err) {
       callback(err, null)
     } else {
       callback(null, productData);
+    }
+  })
+};
+
+const getProductFeatureData = (currentId, callback) => {
+  models.Feature.find({feature_id: currentId},(err, productFeatures) => {
+    if (err) {
+      callback(err, null)
+    } else {
+      callback(null, productFeatures);
     }
   })
 };
@@ -45,9 +55,7 @@ const getSkuData = callback => {
   })
 };
 
-//need to pass down a particular product_id here
 const getRelatedProductsData = (currentId, callback) => {
-  console.log('checking if it reaches here');
   models.RelatedProduct.find({product_id: currentId}, (err, data) => {
     if (err) {
       callback(err, null)
@@ -59,6 +67,7 @@ const getRelatedProductsData = (currentId, callback) => {
 
 module.exports = {
   getProductData,
+  getProductFeatureData,
   getProductStylesData,
   getPhotoData,
   getSkuData,

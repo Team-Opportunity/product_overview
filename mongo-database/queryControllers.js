@@ -3,10 +3,20 @@ const models = require('./queryModels.js');
 
 //need to pass down a particular product_id here
 const getProduct = function(req, res) {
-  models.getProductData((err, results) => {
+  const currentId = req.params.product_id;
+  models.getProductData(currentId, (err, results) => {
     if (err) {
       res.status(500).send(err)
     } else res.status(200).send(results);
+  })
+};
+
+const getProductFeatures = function(req, res) {
+  const currentId = req.params.feature_id;
+  models.getProductFeatureData(currentId, (err, features) => {
+    if (err) {
+      res.status(500).send(err)
+    } else res.status(200).send(features);
   })
 };
 
@@ -47,10 +57,9 @@ const getRelatedProducts = function(req, res) {
   })
 }
 
-
-
 module.exports = {
   getProduct,
+  getProductFeatures,
   getProductStyles,
   getPhotos,
   getSkus,

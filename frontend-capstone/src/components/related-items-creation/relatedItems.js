@@ -23,7 +23,6 @@ class RelatedItems extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.currentProductID !== prevProps.currentProductID) {
-      console.log('currentid', this.props.currentProductID)
       // console.log('apiMaster: ', apiMaster);
       // console.log('this.props: ', this.props);
       // console.log('componentDidUpdate for RelatedItems ran!');
@@ -43,7 +42,15 @@ class RelatedItems extends React.Component {
          relatedProductIds: this.removeDuplicateRelatedIds(relatedIds),
       });
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log(err))
+    .then(() => {
+      this.getRelatedItemFeatures();
+      this.getRelatedItemNames();
+      this.getRelatedItemRatings();
+    })
+    .catch((err) => {
+      console.log('err in getRelatedIds: ', err);
+    });
     // apiMaster
     //   .getRelatedProducts(this.props.currentProductID)
     //   .then((ids) => {
@@ -51,14 +58,14 @@ class RelatedItems extends React.Component {
     //       relatedProductIds: this.removeDuplicateRelatedIds(ids.data),
     //     });
     //   })
-    //   .then(() => {
-    //     this.getRelatedItemFeatures();
-    //     this.getRelatedItemNames();
-    //     this.getRelatedItemRatings();
-    //   })
-    //   .catch((err) => {
-    //     console.log('err in getRelatedIds: ', err);
-    //   });
+      // .then(() => {
+      //   this.getRelatedItemFeatures();
+      //   this.getRelatedItemNames();
+      //   this.getRelatedItemRatings();
+      // })
+      // .catch((err) => {
+      //   console.log('err in getRelatedIds: ', err);
+      // });
   }
 
   removeDuplicateRelatedIds(array) {
@@ -70,12 +77,19 @@ class RelatedItems extends React.Component {
   getRelatedItemFeatures() {
     let promises = [];
     for (let i = 0; i < this.state.relatedProductIds.length; i++) {
+      console.log('relatedprodudctsid', this.state.relatedProductIds[i])
       promises.push(
-        apiMaster
-          .getProductInfo(this.state.relatedProductIds[i])
-          .then((res) => {
-            return res.data.features;
+        axios.get(`/products/${this.state.relatedProductIds[i]}/features`)
+          .then (res => {
+            return res.data
           })
+          .catch(err => console.log(err))
+        // apiMaster
+        //   .getProductInfo(this.state.relatedProductIds[i])
+        //   .then((res) => {
+        //     console.log(res.data.features)
+        //     return res.data.features;
+        //   })
       );
     }
     Promise.all(promises)
@@ -91,11 +105,15 @@ class RelatedItems extends React.Component {
     let promises = [];
     for (let i = 0; i < this.state.relatedProductIds.length; i++) {
       promises.push(
-        apiMaster
-          .getProductInfo(this.state.relatedProductIds[i])
-          .then((res) => {
-            return res.data.name;
-          })
+        axios.get(`/products/${this.state.relatedProductIds[i]}`)
+          .then (res => console.log(res.data[0].name))
+          .catch(err => console.log(err))
+        // apiMaster
+        //   .getProductInfo(this.state.relatedProductIds[i])
+        //   .then((res) => {
+        //     console.log(res.data);
+        //     return res.data.name;
+        //   })
       );
     }
     Promise.all(promises)
@@ -111,12 +129,19 @@ class RelatedItems extends React.Component {
     let promises = [];
     for (let i = 0; i < this.state.relatedProductIds.length; i++) {
       promises.push(
-        apiMaster
-          .getReviewMetaData(this.state.relatedProductIds[i])
+        axios.get(`/products/${this.state.relatedProductIds[i]}`)
+          .then (res => console.log(res.data[0]))
           .then(({ data }) => {
-            let averageRating = this.props.calculateAverageRating(data.ratings);
-            return averageRating;
+              let averageRating = this.props.calculateAverageRating(data.ratings);
+              return averageRating;
           })
+          .catch(err => console.log(err))
+        // apiMaster
+        //   .getReviewMetaData(this.state.relatedProductIds[i])
+        //   .then(({ data }) => {
+        //     let averageRating = this.props.calculateAverageRating(data.ratings);
+        //     return averageRating;
+        //   })
       );
     }
     Promise.all(promises)
