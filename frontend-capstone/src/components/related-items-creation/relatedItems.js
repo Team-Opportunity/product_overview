@@ -2,6 +2,7 @@ import React from 'react';
 import apiMaster from '../../apiMaster';
 import ProductCard from './productCard';
 import YourOutfit from './yourOutfit';
+import axios from 'axios';
 
 class RelatedItems extends React.Component {
   constructor(props) {
@@ -22,29 +23,42 @@ class RelatedItems extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.currentProductID !== prevProps.currentProductID) {
+      console.log('currentid', this.props.currentProductID)
       // console.log('apiMaster: ', apiMaster);
       // console.log('this.props: ', this.props);
       // console.log('componentDidUpdate for RelatedItems ran!');
       this.getRelatedIds();
+
     }
   }
 
   getRelatedIds() {
-    apiMaster
-      .getRelatedProducts(this.props.currentProductID)
-      .then((ids) => {
-        this.setState({
-          relatedProductIds: this.removeDuplicateRelatedIds(ids.data),
-        });
-      })
-      .then(() => {
-        this.getRelatedItemFeatures();
-        this.getRelatedItemNames();
-        this.getRelatedItemRatings();
-      })
-      .catch((err) => {
-        console.log('err in getRelatedIds: ', err);
+    axios.get(`/products/${this.props.currentProductID}/related`)
+    .then(res => {
+      let relatedIds = [];
+      for (let i = 0; i < res.data.length; i++) {
+        relatedIds.push(res.data[i].related_product_id);
+      }
+      this.setState({
+         relatedProductIds: this.removeDuplicateRelatedIds(relatedIds),
       });
+    })
+    .catch(err => console.log(err));
+    // apiMaster
+    //   .getRelatedProducts(this.props.currentProductID)
+    //   .then((ids) => {
+    //     this.setState({
+    //       relatedProductIds: this.removeDuplicateRelatedIds(ids.data),
+    //     });
+    //   })
+    //   .then(() => {
+    //     this.getRelatedItemFeatures();
+    //     this.getRelatedItemNames();
+    //     this.getRelatedItemRatings();
+    //   })
+    //   .catch((err) => {
+    //     console.log('err in getRelatedIds: ', err);
+    //   });
   }
 
   removeDuplicateRelatedIds(array) {
