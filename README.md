@@ -16,7 +16,7 @@ Project Catwalk comprises a complete redesign of the retail portal designed to a
 
 ## Technologies Used
 
-### Back-End Development
+### Server Side Development & Database
 <img align="left" alt="Node JS" width="30px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/nodejs/nodejs.png" />
 <img align="left" alt="Express" width="30px" src="https://github.com/devicons/devicon/blob/master/icons/express/express-original.svg" />
 <br />
