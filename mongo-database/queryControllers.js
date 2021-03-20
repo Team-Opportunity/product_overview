@@ -20,7 +20,7 @@ const getProductStyles = function(req, res) {
   })
 }
 
-//need to pass down a particular product_id here
+//need to pass down a particular style_id here
 const getPhotos = function(req, res) {
   models.getPhotoData((err, results) => {
     if (err) {
@@ -29,7 +29,7 @@ const getPhotos = function(req, res) {
   })
 }
 
-//need to pass down a particular product_id here
+//need to pass down a particular style_id here
 const getSkus = function(req, res) {
   models.getSkuData((err, results) => {
     if (err) {

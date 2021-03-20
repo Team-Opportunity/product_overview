@@ -3,7 +3,7 @@ const models = require('./schemas.js');
 
 //need to pass down a particular product_id here
 const getProductData = callback => {
-  models.Product.find({product_id: 5},(err, productData) => {
+  models.Product.find({product_id: 4},(err, productData) => {
     if (err) {
       callback(err, null)
     } else {
@@ -25,7 +25,7 @@ const getProductStylesData = callback => {
 
 //need to pass down a particular product_id here
 const getPhotoData = callback => {
-  models.Photo.find({product_id: 5}, (err, styles) => {
+  models.Photo.find({style_id: 5}, (err, styles) => {
     if (err) {
       callback(err, null)
     } else {
@@ -36,7 +36,7 @@ const getPhotoData = callback => {
 
 //need to pass down a particular product_id here
 const getSkuData = callback => {
-  models.Sku.find({product_id: 5}, (err, styles) => {
+  models.Sku.find({style_id: 5}, (err, styles) => {
     if (err) {
       callback(err, null)
     } else {
