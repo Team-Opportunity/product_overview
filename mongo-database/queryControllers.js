@@ -1,6 +1,5 @@
 const mongo = require('./index.js');
 const models = require('./queryModels.js');
-// const axios = require('axios');
 
 //need to pass down a particular product_id here
 const getProduct = function(req, res) {

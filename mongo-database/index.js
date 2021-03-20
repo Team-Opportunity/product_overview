@@ -4,7 +4,11 @@ const mongoose = require('mongoose');
 const model = require("./schemas");
 
 const url = 'mongodb://127.0.0.1:27017/FECproducts';
-mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(url, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true
+})
   .then(() => console.log('MongoDB connection successful'))
   .catch((err) => console.log(err));
 
