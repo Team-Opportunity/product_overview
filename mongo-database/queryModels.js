@@ -46,8 +46,9 @@ const getSkuData = callback => {
 };
 
 //need to pass down a particular product_id here
-const getRelatedProductsData = callback => {
-  models.RelatedProduct.find({product_id: 5}, (err, data) => {
+const getRelatedProductsData = (currentId, callback) => {
+  console.log('checking if it reaches here');
+  models.RelatedProduct.find({product_id: currentId}, (err, data) => {
     if (err) {
       callback(err, null)
     } else {

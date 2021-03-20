@@ -39,7 +39,8 @@ const getSkus = function(req, res) {
 
 //need to pass down a particular product_id here
 const getRelatedProducts = function(req, res) {
-  models.getRelatedProductsData((err, results) => {
+  const currentId =  req.params.product_id;
+  models.getRelatedProductsData(currentId, (err, results) => {
     if (err) {
       res.status(500).send(err)
     } else res.status(200).send(results);
