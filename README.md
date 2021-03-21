@@ -36,14 +36,13 @@ Fork the repo and clone to your local machine. After completion, follow these st
 
 1. Run `npm init` to initialize node package management setup.
 2. Run `npm install` to download dependencies.
-3. You will need to either set up a `.env.local` or a JS file that's attached to the `.gitignore` file. This file will house the private Github Authentication Token in the following form in your root directory. You can read more about creating a token [here](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token)
 
 ## Development
 After installation is complete, proceed to setup the development environment.
-1. Create new React environment using a [Webpack](https://webpack.js.org) bundler.
-2. Create new Node/Express back-end environment.
+1. Create new Node/Express back-end environment.
+2. Create a new SQL/MongoDB - Mongoose database-server.
 
 ## Launch
 After development is complete, proceed to launch application into the browser. Ensure that the run scripts are correct within the package.JSON file.
 1. Run `npm run react-dev` to launch the Webpack bundler.
-2. Run `npm run server` or `nodemon server.js` to launch the server environment.
+2. Run `npm run server` or `nodemon server.js` to launch the server environment. If connected properly, you should be connected to the database as well.
