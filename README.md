@@ -1,4 +1,4 @@
-# Team Emu - Hack Reactor Server Capstone Project (Project Athlier)
+# Team Emu - Hack Reactor Server Development Capstone Project (Project Athlier)
 
 ## Table of Contents
 - [Team Members](#team-members)
