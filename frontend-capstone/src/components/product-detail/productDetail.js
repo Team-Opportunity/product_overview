@@ -25,26 +25,27 @@ class ProductDetail extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.product !== this.props.product) {
       // console.log('product', this.props.product)
-      // axios.get(`/products/${this.props.product.id}/styles`)
-      //   .then(res => {
-      //     console.log('response', res.data);
-      //     this.setState({
-      //       styles: res.data,
-      //       selectedStyle: res.data[0]
-      //     })
-      //   })
-      apiMaster
-        .getProductStyles(this.props.product.id)
-        .then(({ data }) => {
+      axios.get(`/products/${this.props.product.id}/styles`)
+        .then(res => {
+          console.log('response', res.data);
           this.setState({
-            styles: data.results,
-            selectedStyle: data.results[0],
-          });
+            styles: res.data,
+            selectedStyle: res.data[0]
+          })
         })
-        .then(() => {
-          console.log('styles', this.state.styles)
-          console.log('selectedstyle', this.state.selectedStyle)
-        })
+      // apiMaster
+      //   .getProductStyles(this.props.product.id)
+      //   .then(({ data }) => {
+      //     console.log('data', data) //returns an array of objects with styles
+      //     this.setState({
+      //       styles: data.results,
+      //       selectedStyle: data.results[0],
+      //     });
+      //   })
+      //   .then(() => {
+      //     console.log('styles', this.state.styles)
+      //     console.log('selectedstyle', this.state.selectedStyle)
+      //   })
         .catch((err) => {
           console.log(err);
         });

@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 const productSchema = new mongoose.Schema({
   product_id: {
     type: Number,
-    unique: true
+    unique: true,
+    index: true
   },
   name: {type: String},
   slogan: {type: String},
@@ -15,7 +16,7 @@ const productSchema = new mongoose.Schema({
 
 
 const featureSchema = new mongoose.Schema({
-  feature_id: {type: Number},
+  feature_id: {type: Number, index: true},
   feature: {type: String},
   value: {type: String},
   product: {
@@ -25,30 +26,30 @@ const featureSchema = new mongoose.Schema({
 }, {versionKey: false});
 
 const styleSchema = new mongoose.Schema({
-  id: {type: Number, unique: true},
+  id: {type: Number, unique: true, index: true},
   product_id: {type: Number},
   name: {type: String},
   sales_price: {type: String, default: null},
   original_price: {type: String},
   default: {type: Boolean},
-  photos: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Photo'
-  }],
-  sku: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Sku'
-  }]
+  // photos: [{
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Photo'
+  // }],
+  // sku: [{
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Sku'
+  // }]
 }, {versionKey: false});
 
 const photoSchema = new mongoose.Schema({
-  style_id: {type: Number},
+  style_id: {type: Number, index: true},
   thumbnail_url: {type: String},
   url: {type: String}
 }, {versionKey: false});
 
 const skuSchema = new mongoose.Schema({
-  style_id: {type: Number, required: true},
+  style_id: {type: Number, required: true, index: true},
   size: {type: String},
   quantity: {type: Number}
 }, {versionKey: false});

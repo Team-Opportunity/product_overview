@@ -1,5 +1,4 @@
 const mongo = require('./index.js');
-const models = require('./queryModels.js');
 const schemas = require('./schemas.js');
 
 //lookup features
@@ -16,7 +15,11 @@ const getProduct = {
         }
       },
      {$match: {product_id: Number(req.params.product_id)}},
-     {$project: {"_id": 0, "features._id": 0, "features.feature_id": 0}}
+     {$project: {
+       "_id": 0,
+       "features._id": 0,
+       "features.feature_id": 0
+      }}
     ])
       .then(data => {
         res.status(200).send(data);
@@ -38,8 +41,15 @@ const getProductStyles = {
           as: 'skus'
         }
       },
+     {$sort: {product_id: 1, id: 1}},
      {$match: {product_id: Number(req.params.product_id)}},
-     {$project: {"_id": 0, "features._id": 0, "features.style_id": 0}}
+     {$project: {
+       "_id": 0,
+       "id": 0,
+       "product_id": 0,
+       "skus._id": 0,
+       "skus.style_id": 0
+      }}
     ])
       .then(data => {
         res.status(200).send(data);
@@ -49,13 +59,13 @@ const getProductStyles = {
 }
 
 //need to pass down a particular style_id here
-const getPhotos = function(req, res) {
-  models.getPhotoData((err, results) => {
-    if (err) {
-      res.status(500).send(err)
-    } else res.status(200).send(results);
-  })
-}
+// const getPhotos = function(req, res) {
+//   models.getPhotoData((err, results) => {
+//     if (err) {
+//       res.status(500).send(err)
+//     } else res.status(200).send(results);
+//   })
+// }
 
 const getRelatedProducts = function(req, res) {
   const currentId =  req.params.product_id;
@@ -79,6 +89,6 @@ const getRelatedProducts = function(req, res) {
 module.exports = {
   getProduct,
   getProductStyles,
-  getPhotos,
+  // getPhotos,
   getRelatedProducts
 }

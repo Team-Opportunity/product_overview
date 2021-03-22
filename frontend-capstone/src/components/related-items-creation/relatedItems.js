@@ -23,11 +23,7 @@ class RelatedItems extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.currentProductID !== prevProps.currentProductID) {
-      // console.log('apiMaster: ', apiMaster);
-      // console.log('this.props: ', this.props);
-      // console.log('componentDidUpdate for RelatedItems ran!');
       this.getRelatedIds();
-
     }
   }
 
@@ -36,7 +32,7 @@ class RelatedItems extends React.Component {
     .then(res => {
       let relatedIds = [];
       for (let i = 0; i < res.data.length; i++) {
-        relatedIds.push(res.data[i].related_product_id);
+        relatedIds.push(res.data[i].related_products_id);
       }
       this.setState({
          relatedProductIds: this.removeDuplicateRelatedIds(relatedIds),
@@ -77,9 +73,8 @@ class RelatedItems extends React.Component {
   getRelatedItemFeatures() {
     let promises = [];
     for (let i = 0; i < this.state.relatedProductIds.length; i++) {
-      // console.log('relatedprodudctsid', this.state.relatedProductIds[i])
       promises.push(
-        axios.get(`/products/${this.state.relatedProductIds[i]}/features`)
+        axios.get(`/products/${this.state.relatedProductIds[i]}`)
           .then (res => {
             return res.data
           })
@@ -131,17 +126,9 @@ class RelatedItems extends React.Component {
     let promises = [];
     for (let i = 0; i < this.state.relatedProductIds.length; i++) {
       promises.push(
-        // axios.get(`/products/${this.state.relatedProductIds[i]}`)
-        //   .then(res => {
-        //     console.log('response data',res.data)
-        //       let averageRating = this.props.calculateAverageRating(res.data[0].ratings);
-        //       return averageRating;
-        //   })
-        //   .catch(err => console.log(err))
         apiMaster
           .getReviewMetaData(this.state.relatedProductIds[i])
           .then(({ data }) => {
-            console.log('data', data)
             let averageRating = this.props.calculateAverageRating(data.ratings);
             return averageRating;
           })

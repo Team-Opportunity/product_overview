@@ -5,11 +5,6 @@ it('should return a 200 status for product info', function () {
     .expect('status', 200);
 });
 
-it('should return a 200 status for product features info', function () {
-  return frisby.get('http://localhost:3001/products/1/features')
-    .expect('status', 200);
-});
-
 it('should return a 200 status for product styles info', function () {
   return frisby.get('http://localhost:3001/products/1/styles')
     .expect('status', 200);
@@ -20,10 +15,6 @@ it('should return a 200 status for product styles info', function () {
 //     .expect('status', 200);
 // });
 
-// it('should return a 200 status for skus info', function () {
-//   return frisby.get('http://localhost:3001/skus/1')
-//     .expect('status', 200);
-// });
 
 it('should return a 200 status for related product info', function () {
   return frisby.get('http://localhost:3001/products/1/related')
