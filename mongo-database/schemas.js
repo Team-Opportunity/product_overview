@@ -11,15 +11,9 @@ const productSchema = new mongoose.Schema({
   description: {type: String},
   category: {type: String},
   default_price: {type: Number},
-  features: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Feature'
-  }]
 }, {versionKey: false});
 
-// ensure uniqueness for each value per schema
 
-//link feature id to product id above
 const featureSchema = new mongoose.Schema({
   feature_id: {type: Number},
   feature: {type: String},
@@ -29,13 +23,6 @@ const featureSchema = new mongoose.Schema({
     ref: 'Product'
   }
 }, {versionKey: false});
-
-// const productStyleListSchema = new mongoose.Schema({
-//   results: [{
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: 'Style'
-//   }]
-// }, {versionKey: false});
 
 const styleSchema = new mongoose.Schema({
   id: {type: Number, unique: true},
@@ -74,7 +61,6 @@ const relatedProductSchema = new mongoose.Schema({
 
 const Product = mongoose.model('Product', productSchema);
 const Feature = mongoose.model('Feature', featureSchema);
-// const ProductStyleList = mongoose.model('ProductStyleList', productStyleListSchema);
 const Style = mongoose.model('Style', styleSchema);
 const Photo = mongoose.model('Photo', photoSchema);
 const Sku = mongoose.model('Sku', skuSchema);
@@ -84,23 +70,7 @@ module.exports =  {
   RelatedProduct,
   Product,
   Feature,
-  // ProductStyleList,
   Style,
   Photo,
   Sku
 }
-
-
-// relatedProductSchema.pre('save', async function (next) {
-//   var relatedproduct = this;
-//   if (this.isNew) {
-//       try {
-//           relatedproduct._id = new mongoose.Types.ObjectId();
-//           return next();
-//       } catch (error) {
-//           return next(error);
-//       }
-//   } else {
-//       return next();
-//   }
-// })
