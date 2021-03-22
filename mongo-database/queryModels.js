@@ -23,8 +23,8 @@ const getProductFeatureData = (currentId, callback) => {
 };
 
 //need to pass down a particular product_id here
-const getProductStylesData = callback => {
-  models.Style.find({product_id: 5}, (err, styles) => {
+const getProductStylesData = (currentId, callback) => {
+  models.Style.find({product_id: currentId}, (err, styles) => {
     if (err) {
       callback(err, null)
     } else {

@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+require('express-async-errors');
 const mongoRouters = require('./mongo-database/router.js');
 //you don't need to explicitly state module.export, but you MUST require the file where you are making the mongo connection fromn
 const mongoConnection = require('./mongo-database/index.js');

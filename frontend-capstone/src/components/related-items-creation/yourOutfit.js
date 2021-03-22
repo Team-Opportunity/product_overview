@@ -8,6 +8,7 @@ import {
 } from 'react-icons/fa';
 import { AiOutlinePlus, AiOutlineClose } from 'react-icons/ai';
 import Cookies from 'universal-cookie';
+import axios from 'axios';
 
 class YourOutfit extends React.Component {
   constructor(props) {
@@ -93,6 +94,7 @@ class YourOutfit extends React.Component {
     this.generateOutfitCookie(); // sets state with new list of ids
   }
 
+  //hold off until photos.csv issue is fixed
   getCardImages() {
     console.log('getCardImages ran!');
     let promises = [];
@@ -124,7 +126,14 @@ class YourOutfit extends React.Component {
     console.log('getCardPrices ran!');
     let promises = [];
     for (let i = 0; i < this.state.favoriteOutfits.length; i++) {
+      // console.log('favoriteoutfits', this.state.favoriteOutfits)
       promises.push(
+        // axios.get(`/products/${this.state.favoriteOutfits[i]}/styles`)
+        //   .then(res => ({
+        //     original_price: res.data.results[0].original_price,
+        //     sales_price: res.data.results[0].sales_price
+        //   }))
+        //   .catch(err => console.log(err))
         apiMaster
           .getProductStyles(this.state.favoriteOutfits[i])
           .then((res) => ({
@@ -150,9 +159,12 @@ class YourOutfit extends React.Component {
     let promises = [];
     for (let i = 0; i < this.state.favoriteOutfits.length; i++) {
       promises.push(
-        apiMaster
-          .getProductInfo(this.state.favoriteOutfits[i])
-          .then((res) => res.data)
+        axios.get(`/products/${this.state.favoriteOutfits[i]}`)
+          .then(res => res.data[0])
+          .catch(err => console.log(err))
+        // apiMaster
+        //   .getProductInfo(this.state.favoriteOutfits[i])
+        //   .then((res) => res.data)
       );
     }
     Promise.all(promises)

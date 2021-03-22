@@ -77,7 +77,7 @@ class RelatedItems extends React.Component {
   getRelatedItemFeatures() {
     let promises = [];
     for (let i = 0; i < this.state.relatedProductIds.length; i++) {
-      console.log('relatedprodudctsid', this.state.relatedProductIds[i])
+      // console.log('relatedprodudctsid', this.state.relatedProductIds[i])
       promises.push(
         axios.get(`/products/${this.state.relatedProductIds[i]}/features`)
           .then (res => {
@@ -106,7 +106,9 @@ class RelatedItems extends React.Component {
     for (let i = 0; i < this.state.relatedProductIds.length; i++) {
       promises.push(
         axios.get(`/products/${this.state.relatedProductIds[i]}`)
-          .then (res => console.log(res.data[0].name))
+          .then (res => {
+            return res.data[0].name
+          })
           .catch(err => console.log(err))
         // apiMaster
         //   .getProductInfo(this.state.relatedProductIds[i])
@@ -129,19 +131,20 @@ class RelatedItems extends React.Component {
     let promises = [];
     for (let i = 0; i < this.state.relatedProductIds.length; i++) {
       promises.push(
-        axios.get(`/products/${this.state.relatedProductIds[i]}`)
-          .then (res => console.log(res.data[0]))
-          .then(({ data }) => {
-              let averageRating = this.props.calculateAverageRating(data.ratings);
-              return averageRating;
-          })
-          .catch(err => console.log(err))
-        // apiMaster
-        //   .getReviewMetaData(this.state.relatedProductIds[i])
-        //   .then(({ data }) => {
-        //     let averageRating = this.props.calculateAverageRating(data.ratings);
-        //     return averageRating;
+        // axios.get(`/products/${this.state.relatedProductIds[i]}`)
+        //   .then(res => {
+        //     console.log('response data',res.data)
+        //       let averageRating = this.props.calculateAverageRating(res.data[0].ratings);
+        //       return averageRating;
         //   })
+        //   .catch(err => console.log(err))
+        apiMaster
+          .getReviewMetaData(this.state.relatedProductIds[i])
+          .then(({ data }) => {
+            console.log('data', data)
+            let averageRating = this.props.calculateAverageRating(data.ratings);
+            return averageRating;
+          })
       );
     }
     Promise.all(promises)

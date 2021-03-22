@@ -5,6 +5,7 @@ import { GrFormCheckmark } from "react-icons/gr";
 
 import PhotoContainer from "./photoContainer.js";
 import TextContainer from "./textContainer.js";
+import axios from 'axios';
 
 class ProductDetail extends React.Component {
   constructor(props) {
@@ -23,6 +24,15 @@ class ProductDetail extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.product !== this.props.product) {
+      // console.log('product', this.props.product)
+      // axios.get(`/products/${this.props.product.id}/styles`)
+      //   .then(res => {
+      //     console.log('response', res.data);
+      //     this.setState({
+      //       styles: res.data,
+      //       selectedStyle: res.data[0]
+      //     })
+      //   })
       apiMaster
         .getProductStyles(this.props.product.id)
         .then(({ data }) => {
@@ -30,6 +40,10 @@ class ProductDetail extends React.Component {
             styles: data.results,
             selectedStyle: data.results[0],
           });
+        })
+        .then(() => {
+          console.log('styles', this.state.styles)
+          console.log('selectedstyle', this.state.selectedStyle)
         })
         .catch((err) => {
           console.log(err);
@@ -46,9 +60,17 @@ class ProductDetail extends React.Component {
           selectedStyle: data.results[0],
         });
       })
-      .catch((err) => {
-        console.log(err);
-      });
+    // axios.get(`/products/${this.props.product.id}/styles`)
+    //   .then(res => {
+    //     console.log('response', res.data);
+    //     this.setState({
+    //       styles: res.data,
+    //       selectedStyle: res.data[0]
+    //     })
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   }
 
   updateTextContainerVisibility() {

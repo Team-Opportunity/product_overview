@@ -7,6 +7,7 @@ import {
   FaRegArrowAltCircleRight,
 } from 'react-icons/fa';
 import CardActionButton from './cardActionButton';
+import axios from 'axios';
 
 class ProductCard extends React.Component {
   constructor(props) {
@@ -47,12 +48,15 @@ class ProductCard extends React.Component {
     let promises = [];
     for (let i = 0; i < this.props.relatedProducts.length; i++) {
       promises.push(
-        apiMaster
-          .getProductInfo(this.props.relatedProducts[i])
-          .then((res) => res.data)
-          .catch((err) => {
-            console.log(err);
-          })
+        axios.get(`/products/${this.props.relatedProducts[i]}`)
+          .then(res => res.data[0])
+          .catch(err => console.log(err))
+        // apiMaster
+        //   .getProductInfo(this.props.relatedProducts[i])
+        //   .then((res) => res.data)
+        //   .catch((err) => {
+        //     console.log(err);
+        //   })
       );
     }
     Promise.all(promises).then((res) => {

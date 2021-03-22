@@ -23,7 +23,11 @@ const productSchema = new mongoose.Schema({
 const featureSchema = new mongoose.Schema({
   feature_id: {type: Number},
   feature: {type: String},
-  value: {type: String}
+  value: {type: String},
+  product: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Product'
+  }
 }, {versionKey: false});
 
 // const productStyleListSchema = new mongoose.Schema({
