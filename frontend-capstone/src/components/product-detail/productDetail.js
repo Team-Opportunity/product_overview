@@ -27,7 +27,6 @@ class ProductDetail extends React.Component {
       // console.log('product', this.props.product)
       axios.get(`/products/${this.props.product.id}/styles`)
         .then(res => {
-          console.log('response', res.data);
           this.setState({
             styles: res.data,
             selectedStyle: res.data[0]

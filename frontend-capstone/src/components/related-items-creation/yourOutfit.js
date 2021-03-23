@@ -112,7 +112,6 @@ class YourOutfit extends React.Component {
         //   )
       );
     }
-
     Promise.all(promises)
       .then((res) => {
         this.setState({
@@ -129,20 +128,19 @@ class YourOutfit extends React.Component {
     console.log('getCardPrices ran!');
     let promises = [];
     for (let i = 0; i < this.state.favoriteOutfits.length; i++) {
-      // console.log('favoriteoutfits', this.state.favoriteOutfits)
       promises.push(
-        // axios.get(`/products/${this.state.favoriteOutfits[i]}/styles`)
-        //   .then(res => ({
-        //     original_price: res.data.results[0].original_price,
-        //     sales_price: res.data.results[0].sales_price
-        //   }))
-        //   .catch(err => console.log(err))
-        apiMaster
-          .getProductStyles(this.state.favoriteOutfits[i])
-          .then((res) => ({
-            original_price: res.data.results[0].original_price,
-            sale_price: res.data.results[0].sale_price,
+        axios.get(`/products/${this.state.favoriteOutfits[i]}/styles`)
+          .then(res => ({
+            original_price: res.data[0].original_price,
+            sale_price: res.data[0].sales_price
           }))
+          .catch(err => console.log(err))
+        // apiMaster
+        //   .getProductStyles(this.state.favoriteOutfits[i])
+        //   .then((res) => ({
+        //     original_price: res.data.results[0].original_price,
+        //     sale_price: res.data.results[0].sale_price,
+        //   }))
       );
     }
 
@@ -170,6 +168,7 @@ class YourOutfit extends React.Component {
         //   .then((res) => res.data)
       );
     }
+
     Promise.all(promises)
       .then((res) => {
         this.setState({ cardDetails: res, cardDetailsLoaded: true });
@@ -243,7 +242,7 @@ class YourOutfit extends React.Component {
                       </div>
                       <span
                         className={
-                          this.state.cardPrices[i].sale_price === '0'
+                          this.state.cardPrices[i].sale_price === '0' || this.state.cardPrices[i].sale_price === 'null'
                             ? 'discounted-price-hidden'
                             : ''
                         }
