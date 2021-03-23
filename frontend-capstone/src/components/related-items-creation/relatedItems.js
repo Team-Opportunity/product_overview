@@ -70,13 +70,14 @@ class RelatedItems extends React.Component {
     return uniqueIdsArray;
   }
 
+  //good to go - alex
   getRelatedItemFeatures() {
     let promises = [];
     for (let i = 0; i < this.state.relatedProductIds.length; i++) {
       promises.push(
         axios.get(`/products/${this.state.relatedProductIds[i]}`)
           .then (res => {
-            return res.data
+            return res.data[0].features
           })
           .catch(err => console.log(err))
         // apiMaster

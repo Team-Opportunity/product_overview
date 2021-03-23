@@ -68,13 +68,19 @@ class ProductCard extends React.Component {
     let promises = [];
     for (let i = 0; i < this.props.relatedProducts.length; i++) {
       promises.push(
-        apiMaster
-          .getProductStyles(this.props.relatedProducts[i])
-          .then(
-            (res) =>
-              res.data.results[0].photos[0].thumbnail_url ||
-              'https://images.unsplash.com/photo-1529088148495-2d9f231db829?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1100&q=80'
+        axios.get(`/products/${this.props.relatedProducts[i]}/styles`)
+          .then((res) =>
+            res.data[0].photos[0].thumbnail_url || 'https://images.unsplash.com/photo-1529088148495-2d9f231db829?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1100&q=80'
           )
+
+        // apiMaster
+        //   .getProductStyles(this.props.relatedProducts[i])
+        //   .then(
+        //     (res) =>
+        //       res.data.results[0].photos[0].thumbnail_url ||
+        //       'https://images.unsplash.com/photo-1529088148495-2d9f231db829?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1100&q=80'
+        //   )
+
           .catch((err) => {
             console.log(err);
           })
@@ -92,15 +98,20 @@ class ProductCard extends React.Component {
     let promises = [];
     for (let i = 0; i < this.props.relatedProducts.length; i++) {
       promises.push(
-        apiMaster
-          .getProductStyles(this.props.relatedProducts[i])
-          .then((res) => ({
-            original_price: res.data.results[0].original_price,
-            sale_price: res.data.results[0].sale_price,
+        axios.get(`/products/${this.props.relatedProducts[i]}/styles`)
+          .then(res => ({
+            original_price: res.data[0].original_price,
+            sale_price: res.data[0].sales_price
           }))
-          .catch((err) => {
-            console.log(err);
-          })
+        // apiMaster
+        //   .getProductStyles(this.props.relatedProducts[i])
+        //   .then((res) => ({
+        //     original_price: res.data.results[0].original_price,
+        //     sale_price: res.data.results[0].sale_price,
+        //   }))
+        //   .catch((err) => {
+        //     console.log(err);
+        //   })
       );
     }
     Promise.all(promises).then((res) => {
@@ -166,7 +177,7 @@ class ProductCard extends React.Component {
                     </div>
                     <span
                       className={
-                        this.state.cardPrices[i].sale_price === '0'
+                        this.state.cardPrices[i].sale_price === '0'|| this.state.cardPrices[i].sale_price === "null"
                           ? 'discounted-price-hidden'
                           : ''
                       }

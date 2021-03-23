@@ -1,4 +1,3 @@
-// const mongoose = require('./index.js');
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
@@ -14,7 +13,6 @@ const productSchema = new mongoose.Schema({
   default_price: {type: Number},
 }, {versionKey: false});
 
-
 const featureSchema = new mongoose.Schema({
   feature_id: {type: Number, index: true},
   feature: {type: String},
@@ -28,14 +26,6 @@ const styleSchema = new mongoose.Schema({
   sales_price: {type: String, default: null},
   original_price: {type: String},
   default: {type: Boolean},
-  // photos: [{
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Photo'
-  // }],
-  // sku: [{
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Sku'
-  // }]
 }, {versionKey: false});
 
 const photoSchema = new mongoose.Schema({
@@ -50,7 +40,6 @@ const skuSchema = new mongoose.Schema({
   quantity: {type: Number}
 }, {versionKey: false});
 
-//link product_id to product id in the products
 const relatedProductSchema = new mongoose.Schema({
   product_id: {type: Number, index: true},
   related_product_id: {type: Number}

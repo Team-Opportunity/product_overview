@@ -1,10 +1,10 @@
-const mongo = require('./index.js');
+require('./index.js');
 const schemas = require('./schemas.js');
 
 //lookup features
 const getProduct = {
   async get(req, res){
-    const productFeatures = await schemas.Product.aggregate([
+    const product = await schemas.Product.aggregate([
       {
         $lookup:
         {
@@ -21,9 +21,7 @@ const getProduct = {
        "features.feature_id": 0
       }}
     ])
-      .then(data => {
-        res.status(200).send(data);
-      })
+      .then(data => res.status(200).send(data))
       .catch(err => res.status(500).send(err))
   }
 }
@@ -31,7 +29,7 @@ const getProduct = {
 //lookup the skus and photos
 const getProductStyles = {
   async get(req, res){
-    const productSkus = await schemas.Style.aggregate([
+    const styleDetails = await schemas.Style.aggregate([
       {
         $lookup:
         {
@@ -50,6 +48,7 @@ const getProductStyles = {
           as: 'photos'
         }
       },
+     {$sort: {default: -1}}, //puts true values first
      {$match: {product_id: Number(req.params.product_id)}},
      {$project: {
        "_id": 0,
@@ -61,9 +60,7 @@ const getProductStyles = {
        "photos.style_id": 0
       }}
     ])
-      .then(data => {
-        res.status(200).send(data);
-      })
+      .then(data => res.status(200).send(data))
       .catch(err => res.status(500).send(err))
   }
 }

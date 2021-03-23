@@ -12,7 +12,7 @@ mongoose.connect(url, {
   .then(() => console.log('MongoDB connection successful'))
   .catch((err) => console.log(err));
 
-//change the filepath, model name and its properties, and the .save value for each schema
+//change the filepath, model name and its properties for each schema
 //disabled because ETL process is done
 
 // var count = 0;
@@ -44,16 +44,3 @@ mongoose.connect(url, {
 
 
 module.exports = mongoose;
-
-// db.products.aggregate([
-//   {
-//     $lookup:
-//     {
-//       from: 'features',
-//       localField: "_id",
-//       foreignField: "feature_id",
-//       as: "featuresarray"
-//     }
-//   },
-//   {$match: {product_id: 2}}
-// ]).pretty()

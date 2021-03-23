@@ -53,25 +53,27 @@ class ProductDetail extends React.Component {
   }
 
   componentDidMount() {
-    apiMaster
-      .getProductStyles()
-      .then(({ data }) => {
-        this.setState({
-          styles: data.results,
-          selectedStyle: data.results[0],
-        });
-      })
-    // axios.get(`/products/${this.props.product.id}/styles`)
-    //   .then(res => {
-    //     console.log('response', res.data);
+    // apiMaster
+    //   .getProductStyles()
+    //   .then(({ data }) => {
     //     this.setState({
-    //       styles: res.data,
-    //       selectedStyle: res.data[0]
-    //     })
+    //       styles: data.results,
+    //       selectedStyle: data.results[0],
+    //     });
     //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    // console.log('this props',this.props)
+    // console.log('does this get called');
+    axios.get(`/products/${this.props.product.id}/styles`)
+      .then(res => {
+        console.log('response', res);
+        this.setState({
+          styles: res.data,
+          selectedStyle: res.data[0]
+        })
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   updateTextContainerVisibility() {

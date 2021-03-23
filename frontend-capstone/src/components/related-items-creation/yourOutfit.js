@@ -94,19 +94,22 @@ class YourOutfit extends React.Component {
     this.generateOutfitCookie(); // sets state with new list of ids
   }
 
-  //hold off until photos.csv issue is fixed
+  //done - alex
   getCardImages() {
     console.log('getCardImages ran!');
     let promises = [];
     for (let i = 0; i < this.state.favoriteOutfits.length; i++) {
       promises.push(
-        apiMaster
-          .getProductStyles(this.state.favoriteOutfits[i])
-          .then(
-            (res) =>
-              res.data.results[0].photos[0].thumbnail_url ||
-              'https://images.unsplash.com/photo-1529088148495-2d9f231db829?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1100&q=80'
-          )
+        axios.get(`/products/${this.state.favoriteOutfits[i]}/styles`)
+          .then(res => res.data[0].thumbnail_url || 'https://images.unsplash.com/photo-1529088148495-2d9f231db829?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1100&q=80')
+          .catch(err => console.log(err))
+        // apiMaster
+        //   .getProductStyles(this.state.favoriteOutfits[i])
+        //   .then(
+        //     (res) =>
+        //       res.data.results[0].photos[0].thumbnail_url ||
+        //       'https://images.unsplash.com/photo-1529088148495-2d9f231db829?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1100&q=80'
+        //   )
       );
     }
 
