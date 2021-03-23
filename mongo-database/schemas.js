@@ -19,10 +19,6 @@ const featureSchema = new mongoose.Schema({
   feature_id: {type: Number, index: true},
   feature: {type: String},
   value: {type: String},
-  product: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Product'
-  }
 }, {versionKey: false});
 
 const styleSchema = new mongoose.Schema({
@@ -56,7 +52,7 @@ const skuSchema = new mongoose.Schema({
 
 //link product_id to product id in the products
 const relatedProductSchema = new mongoose.Schema({
-  product_id: {type: Number},
+  product_id: {type: Number, index: true},
   related_product_id: {type: Number}
 }, {versionKey: false});
 

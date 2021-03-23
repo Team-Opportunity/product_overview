@@ -41,14 +41,24 @@ const getProductStyles = {
           as: 'skus'
         }
       },
-     {$sort: {product_id: 1, id: 1}},
+      {
+        $lookup:
+        {
+          from: 'photos',
+          localField: 'id',
+          foreignField: 'style_id',
+          as: 'photos'
+        }
+      },
      {$match: {product_id: Number(req.params.product_id)}},
      {$project: {
        "_id": 0,
        "id": 0,
        "product_id": 0,
        "skus._id": 0,
-       "skus.style_id": 0
+       "skus.style_id": 0,
+       "photos._id": 0,
+       "photos.style_id": 0
       }}
     ])
       .then(data => {
@@ -57,15 +67,6 @@ const getProductStyles = {
       .catch(err => res.status(500).send(err))
   }
 }
-
-//need to pass down a particular style_id here
-// const getPhotos = function(req, res) {
-//   models.getPhotoData((err, results) => {
-//     if (err) {
-//       res.status(500).send(err)
-//     } else res.status(200).send(results);
-//   })
-// }
 
 const getRelatedProducts = function(req, res) {
   const currentId =  req.params.product_id;
@@ -89,6 +90,5 @@ const getRelatedProducts = function(req, res) {
 module.exports = {
   getProduct,
   getProductStyles,
-  // getPhotos,
   getRelatedProducts
 }

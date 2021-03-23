@@ -5,8 +5,6 @@ router.get('/products/:product_id', controller.getProduct.get);
 
 router.get('/products/:product_id/styles', controller.getProductStyles.get);
 
-// router.get('/photos/:style_id', controller.getPhotos);
-
 router.get('/products/:product_id/related', controller.getRelatedProducts);
 
 module.exports = router;
