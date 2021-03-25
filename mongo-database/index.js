@@ -3,14 +3,20 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const model = require("./schemas");
 
-const url = 'mongodb://127.0.0.1:27017/FECproducts';
+const url = 'mongodb://mongodb:27017/FECproducts';
 mongoose.connect(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true
 })
-  .then(() => console.log('MongoDB connection successful'))
-  .catch((err) => console.log(err));
+  // .then(() => console.log('MongoDB connection successful'))
+  // .catch((err) => console.log(err));
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'CONNECTION ERROR'));
+db.once('open', function() {
+  console.log('Connected to the MongoDB')
+})
+
 
 //change the filepath, model name and its properties for each schema
 //disabled because ETL process is done
